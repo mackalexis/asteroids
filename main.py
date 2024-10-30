@@ -12,12 +12,19 @@ def main():
     
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    clock = pygame.time.Clock()
+    dt = 0
+
     while(1):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         pygame.Surface.fill(screen, (0,0,0))
         pygame.display.flip()
+
+        #At the end of each iteration of the game loop, call the .tick() method, and pass it 60. It will pause the game loop until 1/60th of a second has passed.
+        #The .tick() method also returns the amount of time that has passed since the last time it was called: the delta time. Divide the return value by 1000 (to convert from milliseconds to seconds) and save it into the dt variable we created earlier. We're not using dt yet, but we will later.
+        dt = clock.tick(60)/1000
 
 
 if __name__ == "__main__":
