@@ -7,6 +7,7 @@ class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.timer = 0
 
         #Testing
         #assert hasattr(self, 'position'), "self.position is not initialized!"
@@ -43,7 +44,12 @@ class Player(CircleShape):
             self.move(-dt)
 
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.timer <= 0:
+                self.shoot()
+                self.timer = PLAYER_SHOOT_COOLDOWN
+
+        self.timer -= dt
+            
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -52,6 +58,7 @@ class Player(CircleShape):
     def shoot(self):
         print("Shooting!")
         shot = Shot(self.position[0], self.position[1], SHOT_RADIUS)
+        #self.timer = PLAYER_SHOOT_COOLDOWN
         base_vector =  pygame.math.Vector2(0,1)
         base_vector = base_vector.rotate(self.rotation)
         base_vector *= PLAYER_SHOOT_SPEED
